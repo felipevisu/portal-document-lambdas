@@ -1,0 +1,14 @@
+{
+  "name": "document-lambdas",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.136",
+    "esbuild": "^0.20.1"
+  }
+}
