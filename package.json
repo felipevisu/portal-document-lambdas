@@ -1,7 +1,7 @@
 {
   "name": "document-lambdas",
   "version": "1.0.0",
-  "description": "",
+  "description": "Microverse of lambdas to fetch documents",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +10,6 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
     "esbuild": "^0.20.1"
-  }
+  },
+  "workspaces": ["lambdas/TCU"]
 }
