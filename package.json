@@ -11,5 +11,5 @@
     "@types/aws-lambda": "^8.10.136",
     "esbuild": "^0.20.1"
   },
-  "workspaces": ["lambdas/TCU"]
+  "workspaces": ["lambdas/TCU", "lambdas/CND", "lambdas/SEFAZMG"]
 }

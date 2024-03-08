@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        lambda: ["TCU"]
+        lambda: ["TCU", "CND", "SEFAZMG"]
     env:
       SLICE: ${{ matrix.lambda }}
 
