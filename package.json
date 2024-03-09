@@ -9,7 +9,16 @@
   "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
+    "@types/node": "^20.11.25",
     "esbuild": "^0.20.1"
   },
-  "workspaces": ["lambdas/TCU", "lambdas/CND", "lambdas/SEFAZMG"]
+  "workspaces": [
+    "lambdas/TCU",
+    "lambdas/CND",
+    "lambdas/SEFAZMG"
+  ],
+  "dependencies": {
+    "aws-sdk": "^2.1574.0",
+    "axios": "^1.6.7"
+  }
 }

@@ -1,15 +1,45 @@
-import { Context, APIGatewayProxyResult, APIGatewayEvent } from "aws-lambda";
+import { Context, APIGatewayProxyResult } from "aws-lambda";
+import axios from "axios";
+
+interface Event {
+  url: string;
+  bucketName: string;
+  key: string;
+}
 
 export const handler = async (
-  event: APIGatewayEvent,
+  event: Event,
   context: Context
 ): Promise<APIGatewayProxyResult> => {
   console.log(`Event: ${JSON.stringify(event, null, 2)}`);
   console.log(`Context: ${JSON.stringify(context, null, 2)}`);
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      message: "Call API to get a TCU document",
-    }),
-  };
+
+  const url = event.url;
+  const bucketName = event.bucketName;
+  const key = event.key;
+
+  try {
+    const response = await axios.get<Buffer>(url, {
+      responseType: "arraybuffer",
+    });
+
+    const params = {
+      Bucket: bucketName,
+      Key: key,
+      Body: response.data,
+    };
+
+    console.log(`Params: ${JSON.stringify(params, null, 2)}`);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ message: "File uploaded successfully to S3" }),
+    };
+  } catch (error) {
+    console.error("Error downloading or uploading file:", error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: "Error downloading or uploading file" }),
+    };
+  }
 };
