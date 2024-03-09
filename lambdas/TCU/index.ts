@@ -3,11 +3,7 @@ import axios from "axios";
 import {
   S3Client,
   PutObjectCommand,
-  CreateBucketCommand,
-  DeleteObjectCommand,
-  DeleteBucketCommand,
-  paginateListObjectsV2,
-  GetObjectCommand,
+  PutObjectCommandInput,
 } from "@aws-sdk/client-s3";
 
 interface Event {
@@ -34,13 +30,13 @@ export const handler = async (
       responseType: "arraybuffer",
     });
 
-    const params = {
+    const params: PutObjectCommandInput = {
       Bucket: bucketName,
       Key: key,
       Body: response.data,
     };
 
-    console.log(`Params: ${JSON.stringify(params, null, 2)}`);
+    await s3Client.send(new PutObjectCommand(params));
 
     return {
       statusCode: 200,
