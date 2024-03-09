@@ -1,5 +1,14 @@
 import { Context, APIGatewayProxyResult } from "aws-lambda";
 import axios from "axios";
+import {
+  S3Client,
+  PutObjectCommand,
+  CreateBucketCommand,
+  DeleteObjectCommand,
+  DeleteBucketCommand,
+  paginateListObjectsV2,
+  GetObjectCommand,
+} from "@aws-sdk/client-s3";
 
 interface Event {
   url: string;
@@ -13,6 +22,8 @@ export const handler = async (
 ): Promise<APIGatewayProxyResult> => {
   console.log(`Event: ${JSON.stringify(event, null, 2)}`);
   console.log(`Context: ${JSON.stringify(context, null, 2)}`);
+
+  const s3Client = new S3Client({});
 
   const url = event.url;
   const bucketName = event.bucketName;

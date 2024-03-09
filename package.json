@@ -18,6 +18,7 @@
     "lambdas/SEFAZMG"
   ],
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.529.1",
     "aws-sdk": "^2.1574.0",
     "axios": "^1.6.7"
   }
