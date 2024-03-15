@@ -16,23 +16,16 @@ export const handler = async (
   event: Event,
   context: Context
 ): Promise<APIGatewayProxyResult> => {
-  console.log(`Event: ${JSON.stringify(event, null, 2)}`);
-  console.log(`Context: ${JSON.stringify(context, null, 2)}`);
-
   const s3Client = new S3Client({});
 
-  const url = event.url;
-  const bucketName = event.bucketName;
-  const key = event.key;
-
   try {
-    const response = await axios.get<Buffer>(url, {
+    const response = await axios.get<Buffer>(event.url, {
       responseType: "arraybuffer",
     });
 
     const params: PutObjectCommandInput = {
-      Bucket: bucketName,
-      Key: key,
+      Bucket: event.bucketName,
+      Key: event.key,
       Body: response.data,
     };
 
