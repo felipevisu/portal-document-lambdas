@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prebuild": "rm -rf dist",
     "build": "esbuild index.ts --bundle --platform=node --target=es2020 --outfile=dist/index.js",
-    "postbuild": "cd dist && zip -r index.zip index.js*"
+    "postbuild": "cd dist && zip -r index.zip *"
   },
   "dependencies": {
     "puppeteer-core": "^22.6.0"
