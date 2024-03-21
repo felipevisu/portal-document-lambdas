@@ -11,8 +11,7 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
     "@types/node": "^20.11.25",
-    "esbuild": "^0.20.1",
-    "typescript": "^5.4.3"
+    "esbuild": "^0.20.1"
   },
   "workspaces": [
     "lambdas/download",
@@ -20,7 +19,6 @@
     "shared"
   ],
   "dependencies": {
-    "@aws-sdk/client-s3": "^3.529.1",
-    "aws-sdk": "^2.1574.0"
+    "@aws-sdk/client-s3": "^3.529.1"
   }
 }
