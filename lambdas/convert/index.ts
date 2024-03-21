@@ -14,7 +14,9 @@ export const handler = async (
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
-      executablePath: await chromium.executablePath(),
+      executablePath: await chromium.executablePath(
+        "/opt/node_modules/@sparticuz/chromium/bin"
+      ),
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
