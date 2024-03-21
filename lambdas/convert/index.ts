@@ -1,5 +1,5 @@
 import { Context, APIGatewayProxyResult } from "aws-lambda";
-import axios from "axios";
+import * as puppeteer from "puppeteer";
 
 import { Event, s3Upload } from "shared";
 
@@ -8,14 +8,24 @@ export const handler = async (
   context: Context
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const response = await axios.get<Buffer>(event.url, {
-      responseType: "arraybuffer",
-    });
+    const { url } = event;
+
+    const browser = await puppeteer.launch();
+    const page = await browser.newPage();
+    await page.goto(url);
+    const html = await page.content();
+    await browser.close();
+
+    const browser2 = await puppeteer.launch();
+    const page2 = await browser2.newPage();
+    await page2.setContent(html);
+    const pdfBuffer = await page2.pdf();
+    await browser2.close();
 
     await s3Upload({
       bucketName: event.bucketName,
       key: event.key,
-      file: response.data,
+      file: pdfBuffer,
     });
 
     return {
