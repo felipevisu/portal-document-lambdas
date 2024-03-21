@@ -1,6 +1,7 @@
 {
   "name": "document-lambdas",
   "version": "1.0.0",
+  "type": "module",
   "description": "Microverse of lambdas to fetch documents",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,16 +11,16 @@
   "devDependencies": {
     "@types/aws-lambda": "^8.10.136",
     "@types/node": "^20.11.25",
-    "esbuild": "^0.20.1"
+    "esbuild": "^0.20.1",
+    "typescript": "^5.4.3"
   },
   "workspaces": [
     "lambdas/download",
-    "labmdas/convert",
+    "lambdas/convert",
     "shared"
   ],
   "dependencies": {
     "@aws-sdk/client-s3": "^3.529.1",
-    "aws-sdk": "^2.1574.0",
-    "axios": "^1.6.7"
+    "aws-sdk": "^2.1574.0"
   }
 }

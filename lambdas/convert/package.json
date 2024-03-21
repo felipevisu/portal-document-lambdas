@@ -2,13 +2,17 @@
   "name": "convert",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prebuild": "rm -rf dist",
+    "build": "esbuild index.ts --bundle --minify --sourcemap --platform=node --target=es2020 --outfile=dist/index.js",
+    "postbuild": "cd dist && zip -r index.zip index.js*"
   },
-  "author": "",
-  "license": "ISC",
   "dependencies": {
-    "puppeteer": "^22.6.0"
+    "puppeteer-core": "^22.6.0"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^123.0.0"
   }
 }

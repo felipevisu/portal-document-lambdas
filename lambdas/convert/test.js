@@ -1,13 +1,7 @@
-import { Context, APIGatewayProxyResult } from "aws-lambda";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
-import { Event, s3Upload } from "shared";
-
-export const handler = async (
-  event: Event,
-  context: Context
-): Promise<APIGatewayProxyResult> => {
+export const handler = async (event) => {
   try {
     const { url } = event;
 
@@ -18,7 +12,6 @@ export const handler = async (
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-
     const page = await browser.newPage();
     await page.goto(url);
     const html = await page.content();
@@ -28,11 +21,7 @@ export const handler = async (
 
     await browser.close();
 
-    await s3Upload({
-      bucketName: event.bucketName,
-      key: event.key,
-      file: pdfBuffer,
-    });
+    console.log(pdfBuffer);
 
     return {
       statusCode: 200,
@@ -46,3 +35,11 @@ export const handler = async (
     };
   }
 };
+
+const response = await handler({
+  url: "https://www.visualizecomunicacao.com.br/",
+  bucketName: "portal-docker-config",
+  key: "site.pdf",
+});
+
+console.log(response);
