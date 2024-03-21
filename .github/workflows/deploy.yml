@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        lambda: ["download"]
+        lambda: ["download", "convert"]
     env:
       SLICE: ${{ matrix.lambda }}
 
