@@ -11,6 +11,7 @@ export const handler = async (
   try {
     const { url } = event;
 
+    console.log("opening broswer");
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -20,6 +21,7 @@ export const handler = async (
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
+    console.log("opened browser", browser);
 
     const page = await browser.newPage();
     await page.goto(url);
