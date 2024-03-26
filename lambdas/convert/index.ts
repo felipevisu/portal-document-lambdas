@@ -2,16 +2,22 @@ import { Context, APIGatewayProxyResult } from "aws-lambda";
 import chromium from "@sparticuz/chromium";
 import puppeteer from "puppeteer-core";
 
-import { Event, s3Upload } from "shared";
+import { s3Upload } from "shared";
+
+interface Event {
+  content: string;
+  contentType: "url" | "html";
+  bucketName: string;
+  key: string;
+}
 
 export const handler = async (
   event: Event,
   context: Context
 ): Promise<APIGatewayProxyResult> => {
   try {
-    const { url } = event;
+    const { content, contentType } = event;
 
-    console.log("opening broswer");
     const browser = await puppeteer.launch({
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
@@ -21,15 +27,18 @@ export const handler = async (
       headless: chromium.headless,
       ignoreHTTPSErrors: true,
     });
-    console.log("opened browser", browser);
 
     const page = await browser.newPage();
-    await page.goto(url);
-    const html = await page.content();
+    const isHTML = contentType === "html";
 
-    // Step 3: Convert HTML to PDF
+    if (isHTML) {
+      await page.setContent(content);
+    } else {
+      await page.goto(content);
+      await page.content();
+    }
+
     const pdfBuffer = await page.pdf();
-
     await browser.close();
 
     await s3Upload({
